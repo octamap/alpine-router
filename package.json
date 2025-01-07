@@ -1,0 +1,46 @@
+{
+  "name": "@octamap/alpine-router",
+  "version": "1.0.0",
+  "description": "Router for alpine.js (quick & minimal js)",
+  "private": false,
+  "scripts": {
+    "dev": "vite",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build ",
+    "generate": "node generate.cjs",
+    "publish-npmjs": "npm publish --access public"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "main": "dist/index.js",
+  "jsdelivr": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octamap/alpine-router"
+  },
+  "exports": {
+    ".": {
+      "default": "./index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./types": {
+      "default": "./src/types.d.ts",
+      "types": "./dist/types.d.ts"
+    }
+  },
+  "files": [
+    "dist/*"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.2.1",
+    "path": "^0.12.7",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.4.8",
+    "vite-plugin-dts": "^3.9.0"
+  }
+}
