@@ -1,7 +1,7 @@
 {
   "name": "@octamap/alpine-router",
-  "version": "1.0.2",
-  "description": "Router for alpine.js (quick & minimal js)",
+  "version": "1.0.3",
+  "description": "Quick router for alpine.js",
   "private": false,
   "scripts": {
     "dev": "vite",
@@ -21,9 +21,9 @@
   },
   "exports": {
     ".": {
-      "default": "./index.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "require": "./dist/index.js",
+      "default": "./index.ts"
     },
     "./types": {
       "default": "./src/types.d.ts",
