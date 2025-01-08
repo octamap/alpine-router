@@ -63,7 +63,7 @@ export default defineConfig({
      
         lib: {
             entry,
-            "name": "OctamapAlpineLibrary",
+            "name": "OctamapAlpineRouter",
             formats: ["iife"],
             fileName: () => "index.js"
         },
