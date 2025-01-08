@@ -32,6 +32,10 @@ export default async function loadRoute(element: Element, name: string): Promise
         if (path === "/") {
             element.setAttribute(key, path);
 
+            if (currentPath == null) {
+                return;
+            }
+
             element.innerHTML = defaultContent.get(elementRouterId) ?? "";
             if (element instanceof HTMLElement) {
                 window.Alpine.initTree(element)
