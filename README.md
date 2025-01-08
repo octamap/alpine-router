@@ -32,7 +32,7 @@ import "@octamap/alpine-router"
 Add the following script tag to your project **before** Alpine.js:
 ```html
 <!-- Add alpine-router -->
-<script src="https://cdn.jsdelivr.net/npm/@octamap/alpine-router"></script>
+<script src="https://cdn.jsdelivr.net/npm/@octamap/alpine-router@1.x.x"></script>
 
 <!-- Add Alpine.js -->
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
