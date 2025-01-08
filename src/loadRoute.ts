@@ -15,7 +15,7 @@ export default async function loadRoute(element: Element, name: string): Promise
         // 1. Get the current window path
         const path = window.location.pathname;
         const currentPath = element.getAttribute(key);
-        const elementRouterId = element.getAttribute(idKey) ?? (() => { 
+        const elementRouterId = element.getAttribute(idKey) ?? (() => {
             nextId++;
             element.setAttribute(idKey, nextId.toString())
             return nextId.toString()
@@ -24,14 +24,18 @@ export default async function loadRoute(element: Element, name: string): Promise
         // If the path hasn't changed, do nothing
         if (currentPath === path) return;
 
+        if (currentPath == null) {
+            defaultContent.set(elementRouterId, element.innerHTML)
+        }
+
         // Handle the root path "/"
         if (path === "/") {
             element.setAttribute(key, path);
 
-            if (currentPath === null) {
-                return;
-            }
             element.innerHTML = defaultContent.get(elementRouterId) ?? "";
+            if (element instanceof HTMLElement) {
+                window.Alpine.initTree(element)
+            }
             return;
         }
 
@@ -49,16 +53,10 @@ export default async function loadRoute(element: Element, name: string): Promise
             }
 
             let html = await response.text();
-
-            // Check if a default template already exists
-            let defaultTemplate = defaultContent.get(elementRouterId)
-            if (!defaultTemplate) {
-                defaultContent.set(elementRouterId, element.innerHTML)
-            }
-
-            // Update the element's inner HTML with the fetched content
             element.innerHTML = html;
-            
+            if (element instanceof HTMLElement) {
+                window.Alpine.initTree(element)
+            }
         } catch (fetchError) {
             element.setAttribute(key, path);
             console.error('[router] Error loading route:', fetchError);
