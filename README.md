@@ -10,7 +10,7 @@ A lightweight router for Alpine.js applications that allows you to define routes
 - **Static File-Based Routing**: Automatically map routes to static files in your `/public` folder.  
 - **Dynamic Routing API**: `$router` handler for programmatic navigation (`push`, `replace`, `path`).  
 - **TypeScript Support**: Access full TypeScript types even when using the CDN version.  
-- **CDN or NPM Compatible**: Install via npm or include it via jsDelivr.  
+- **CDN or NPM Compatible**: Install via npm or include it via jsDelivr. (just **1.2 KB** in total)
 
 ---
 
