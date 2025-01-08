@@ -1,3 +1,4 @@
+
 import loadRoute from "./loadRoute.js";
 
 window.router = {

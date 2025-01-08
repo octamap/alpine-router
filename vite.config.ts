@@ -27,7 +27,7 @@ const input: Record<string, string> = {}
 
 if (exports) {
     for (const [key, paths] of Object.entries(exports)) {
-  
+        if (key.includes("types")) continue;
         if (!paths.default) continue;
         const name = getName(key)
         entry[name] = paths.default
@@ -60,15 +60,12 @@ export default defineConfig({
     ],
     build: {
         outDir: "dist",
-        minify: "esbuild",
-        terserOptions: {
-            format: {
-                comments: false
-            }
-        },
+     
         lib: {
             entry,
-            formats: ["es", "cjs"]
+            "name": "OctamapAlpineLibrary",
+            formats: ["iife"],
+            fileName: () => "index.js"
         },
         rollupOptions: {
             input,

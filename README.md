@@ -21,10 +21,21 @@ A lightweight router for Alpine.js applications that allows you to define routes
 npm install @octamap/alpine-router
 ```
 
+And then import it anywhere in your code (keep in mind that Alpine.js needs to be loaded before you import it)
+
+```js
+import "@octamap/alpine-router"
+```
+
+
 ### **Using jsDelivr CDN**
-Add the following script tag to your project:
+Add the following script tag to your project **before** Alpine.js:
 ```html
+<!-- Add alpine-router -->
 <script src="https://cdn.jsdelivr.net/npm/@octamap/alpine-router"></script>
+
+<!-- Add Alpine.js -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 ```
 
 To enable TypeScript support, create a `d.ts` file:
