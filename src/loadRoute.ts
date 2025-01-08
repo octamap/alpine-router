@@ -68,7 +68,7 @@ export default async function loadRoute(element: Element, routerName: string): P
         console.error('[router] Unexpected error:', error);
     } finally {
         setTimeout(() => {
-            if (element instanceof HTMLElement) element.style.opacity = "1";
+            if (element instanceof HTMLElement) element.style.removeProperty("opacity");
         }, 14);
     }
 }
