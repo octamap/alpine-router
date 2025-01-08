@@ -1,6 +1,6 @@
 {
   "name": "@octamap/alpine-router",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Quick router for alpine.js",
   "private": false,
   "scripts": {
