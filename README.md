@@ -1,6 +1,6 @@
 # 📚 **@octamap/alpine-router**
 
-A lightweight and powerful router for **Alpine.js** applications. Define routes directly in your HTML with ease, supporting both **static file-based routing** and **dynamic programmatic navigation**.
+A lightweight and powerful router for **Alpine.js** applications. Define routes directly in your HTML with ease, supporting both **static file-based routing**, **dynamic programmatic navigation**, and **query parameters**.
 
 ---
 
@@ -8,11 +8,12 @@ A lightweight and powerful router for **Alpine.js** applications. Define routes 
 
 ✅ **Declarative Routing:** Define routes seamlessly with the `router` attribute.  
 ✅ **Static Routing:** Map routes to files in your `/public` folder automatically.  
-✅ **Dynamic API:** `$router` for navigation (`push`, `replace`, `path`).  
+✅ **Dynamic API:** `$router` for navigation (`push`, `replace`, `path`, `query`).  
+✅ **Query Parameter Support:** Manage and access URL query strings effortlessly.  
 ✅ **TypeScript Support:** Full type support, even with the CDN version.  
 ✅ **Lightweight:** Just **1.2 KB** (gzipped).  
-✅ **Flexible Installation:** Use via **npm** or **jsDelivr CDN**.
-✅ **Transition Support:** Easy to add smooth transitions during route changes 
+✅ **Flexible Installation:** Use via **npm** or **jsDelivr CDN**.  
+✅ **Transition Support:** Easy to add smooth transitions during route changes.  
 
 ---
 
@@ -93,6 +94,7 @@ Navigate dynamically using `$router`:
 - `$router.push(path)` → Navigate to a new route.  
 - `$router.replace(path)` → Replace the current route.  
 - `$router.path` → Get the current path.  
+- `$router.query` → Access query parameters.  
 
 ### **Global Access via `window.router`**
 
@@ -101,6 +103,97 @@ Use global routing methods:
 ```js
 window.router.push('/login');  // Navigate to `/login`
 window.router.replace('/home'); // Replace current path with `/home`
+```
+
+---
+
+## 🌟 **Using Query Parameters**
+
+### **1. Access Query Parameters**
+
+You can access query parameters directly using `$router.query`.
+
+**Example:**
+```html
+<div x-data>
+    <p>Current User: <span x-text="$router.query.user"></span></p>
+    <p>Theme: <span x-text="$router.query.theme"></span></p>
+</div>
+```
+
+**Given URL:**  
+```
+/profile?user=123&theme=dark
+```
+
+**Result:**
+- `$router.query.user` → `"123"`
+- `$router.query.theme` → `"dark"`
+
+---
+
+### **2. Navigate with Query Parameters**
+
+#### **Using `$router.push`**
+Adds an entry to the browser history while including query parameters.
+
+```js
+$router.push('/dashboard', { user: '456', theme: 'light' });
+```
+
+**Resulting URL:**  
+```
+/dashboard?user=456&theme=light
+```
+
+#### **Using `$router.replace`**
+Replaces the current history entry with a new path and query parameters.
+
+```js
+$router.replace('/settings', { mode: 'edit', debug: 'true' });
+```
+
+**Resulting URL:**  
+```
+/settings?mode=edit&debug=true
+```
+
+---
+
+### **3. Dynamically Update Query Parameters**
+
+If you want to update only the query parameters while keeping the current path:
+
+```js
+$router.replace($router.path, { sort: 'asc', filter: 'active' });
+```
+
+**Resulting URL (assuming current path is `/tasks`):**  
+```
+/tasks?sort=asc&filter=active
+```
+
+---
+
+### **4. Reactive Query in Alpine.js**
+
+Query parameters in Alpine.js are reactive:
+
+```html
+<div x-data>
+    <p>Current Page: <span x-text="$router.query.page || 'No page specified'"></span></p>
+</div>
+```
+
+Navigate dynamically:
+
+```js
+$router.push('/items', { page: '2' });
+```
+
+**Dynamic Update Result:**  
+```
+2
 ```
 
 ---
@@ -127,11 +220,12 @@ When navigating, content will **fade out** before the new content **fades in**.
 
 ## 📘 **API Reference**
 
-| Method            | Description          | Example                     |
-| ----------------- | -------------------- | --------------------------- |
-| `$router.push`    | Navigate to a path   | `$router.push('/home')`     |
-| `$router.replace` | Replace current path | `$router.replace('/about')` |
-| `$router.path`    | Get the current path | `console.log($router.path)` |
+| Method            | Description                  | Example                           |
+| ----------------- | ---------------------------- | --------------------------------- |
+| `$router.push`    | Navigate to a path           | `$router.push('/home')`           |
+| `$router.replace` | Replace current path         | `$router.replace('/about')`       |
+| `$router.path`    | Get the current path         | `console.log($router.path)`       |
+| `$router.query`   | Get current query parameters | `console.log($router.query.user)` |
 
 ---
 
@@ -148,7 +242,8 @@ Example setup using Alpine.js and Alpine Router via CDN:
 <body>
   <div router="my-router">
     <h2 x-show="$router.path === '/'">Home Page</h2>
-    <button @click="$router.push('/login')">Go to Login</button>
+    <p>User: <span x-text="$router.query.user"></span></p>
+    <button @click="$router.push('/login', { user: '123' })">Go to Login</button>
   </div>
 </body>
 ```
@@ -193,5 +288,3 @@ Developed with ❤️ by **Octamap Team**.
 ---
 
 Happy Routing! 🚦✨
-
----
