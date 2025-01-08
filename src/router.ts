@@ -1,4 +1,3 @@
-
 import loadRoute from "./loadRoute.js";
 
 window.router = {
@@ -40,7 +39,7 @@ document.addEventListener('alpine:init', () => {
 
         const routerElements = document.querySelectorAll('[router]');
 
-        routerElements.forEach(el => {
+        routerElements.forEach(async el => {
             // Skip if the element is inside <template id="default-route">
             const isInsideDefaultRoute = el.closest('#default-route') !== null;
 

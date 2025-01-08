@@ -1,3 +1,5 @@
+import fetchRoute from "./fetchRoute.js";
+import getOpacityTransitionDuration from "./getOpacityTransitionDuration.js";
 
 const key = "x-ofn";
 const idKey = "x-glc";
@@ -8,9 +10,9 @@ const defaultContent = new Map<string, string>()
 /**
  * Loads the appropriate HTML content based on the current window path.
  * @param element - The DOM element to load content into.
- * @param name - The base name used to construct the fetch URL.
+ * @param routerName - The base name used to construct the fetch URL.
  */
-export default async function loadRoute(element: Element, name: string): Promise<void> {
+export default async function loadRoute(element: Element, routerName: string): Promise<void> {
     try {
         // 1. Get the current window path
         const path = window.location.pathname;
@@ -23,19 +25,25 @@ export default async function loadRoute(element: Element, name: string): Promise
 
         // If the path hasn't changed, do nothing
         if (currentPath === path) return;
-
         if (currentPath == null) {
             defaultContent.set(elementRouterId, element.innerHTML)
         }
 
         // Handle the root path "/"
-        if (path === "/") {
-            element.setAttribute(key, path);
+        element.setAttribute(key, path);
+        if (path === "/" && currentPath == null) {
+            return;
+        }
 
-            if (currentPath == null) {
-                return;
-            }
+        // Apply transition 
+        const transition = element.getAttribute("router-transition")
+        if (transition == "fade" && element instanceof HTMLElement) {
+            element.style.opacity = "0";
+            await new Promise(resolve => setTimeout(resolve, getOpacityTransitionDuration(element)))
+        }
 
+        // Set to default content
+        if (path == "/") {
             element.innerHTML = defaultContent.get(elementRouterId) ?? "";
             if (element instanceof HTMLElement) {
                 window.Alpine.initTree(element)
@@ -43,21 +51,9 @@ export default async function loadRoute(element: Element, name: string): Promise
             return;
         }
 
-        // Construct the URL to fetch the route's HTML
-        const fetchUrl = `/${name}${path}.html`;
-
         try {
-            const response = await fetch(fetchUrl);
-
             // Update the stored path
-            element.setAttribute(key, path);
-
-            if (!response.ok) {
-                throw new Error(`Failed to fetch ${fetchUrl}: ${response.status} ${response.statusText}`);
-            }
-
-            let html = await response.text();
-            element.innerHTML = html;
+            element.innerHTML = await fetchRoute(routerName, path);
             if (element instanceof HTMLElement) {
                 window.Alpine.initTree(element)
             }
@@ -70,5 +66,9 @@ export default async function loadRoute(element: Element, name: string): Promise
         }
     } catch (error) {
         console.error('[router] Unexpected error:', error);
+    } finally {
+        setTimeout(() => {
+            if (element instanceof HTMLElement) element.style.opacity = "1";
+        }, 14);
     }
 }
