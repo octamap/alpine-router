@@ -1,6 +1,6 @@
 {
   "name": "@octamap/alpine-router",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Quick router for alpine.js",
   "private": false,
   "scripts": {
@@ -15,15 +15,16 @@
   "type": "module",
   "main": "dist/index.js",
   "jsdelivr": "dist/index.js",
+  "keywords": ["alpinejs", "router", "alpine"],
   "repository": {
     "type": "git",
     "url": "https://github.com/octamap/alpine-router"
   },
   "exports": {
     ".": {
-      "default": "./index.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "require": "./dist/index.js",
+      "default": "./index.ts"
     },
     "./types": {
       "default": "./src/types.d.ts",
